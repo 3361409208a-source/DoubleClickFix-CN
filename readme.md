@@ -1,163 +1,71 @@
-﻿# 🖱️ Double-click Fix
+# 🖱️ DoubleClickFix - 中文版 (双击修正)
 
-[![.NET](https://github.com/nenning/DoubleClickFix/actions/workflows/dotnet.yml/badge.svg)](https://github.com/nenning/DoubleClickFix/actions/workflows/dotnet.yml) &nbsp; [![GitHub release (latest by date)](https://img.shields.io/github/v/release/nenning/DoubleClickFix)](https://github.com/nenning/DoubleClickFix/releases/latest) &nbsp; [![License](https://img.shields.io/github/license/nenning/DoubleClickFix)](LICENSE.txt) &nbsp; [![Microsoft Store](https://img.shields.io/badge/Microsoft_Store-Get_it_now-blue?logo=microsoft-store)](https://apps.microsoft.com/detail/9PDGM7NL2FF2)
+[![.NET](https://github.com/nenning/DoubleClickFix/actions/workflows/dotnet.yml/badge.svg)](https://github.com/nenning/DoubleClickFix/actions/workflows/dotnet.yml) &nbsp; [![GitHub release (latest by date)](https://img.shields.io/github/v/release/nenning/DoubleClickFix)](https://github.com/nenning/DoubleClickFix/releases/latest) &nbsp; [![License](https://img.shields.io/github/license/nenning/DoubleClickFix)](LICENSE.txt)
 
-A lightweight solution for mitigating double-click issues caused by malfunctioning mice.
+这是一个轻量级的 Windows 工具，专门用于修复由于鼠标开关硬件故障（如：微动开关连击、抖动）引起的意外双击问题。
 
-**New in release 1.5:** 🖱️ **Mouse Wheel Fix** – if you have problems with a "bouncy" or "jittery" mouse wheel, you can now enable a fix for it in the UI!
+**版本 1.5 更新：** 🖱️ **鼠标滚轮修复** – 如果您的鼠标滚轮存在“回滚”或“抖动”问题，现在可以在 UI 中开启修复功能！
 
-**New in release 1.4:** 🎉 **Experimental Drag & Drop Support** – if you have problems with dragging, enable this feature in the UI! The tool will maintain a stable drag until you intentionally release.
+**版本 1.4 更新：** 🎉 **实验性拖拽支持** – 修复拖拽过程中由于硬件连击导致的意外松开。开启后，工具会保持稳定的拖拽状态，直到您明确释放。
 
-This tool ensures smoother operation by filtering unintended double-click events and supporting reliable drag-and-drop gestures, allowing you to define the minimal delay between valid clicks directly from an intuitive user interface.
+此工具通过拦截并过滤非正常的双击事件来确保操作流畅，并支持可靠的拖拽手势。您可以在直观的用户界面中直接定义有效点击之间的最小延迟。
 
-## 🛍️ Get it from the [Microsoft Store](https://apps.microsoft.com/detail/9PDGM7NL2FF2?hl=en-us&gl=CH&ocid=pdpshare)!
+## ✨ 主要功能
 
-![logo](DoubleClickFix/app.ico)
-
-## 📋 Table of Contents
-- [Features](#-features)
-- [How It Works: Filtering Mouse Clicks](#️-how-it-works-filtering-mouse-clicks)
-- [System Requirements](#-system-requirements)
-- [Installation](#-installation)
-- [Configuration](#️-configuration)
-- [Contributions](#-contributions)
-- [License](#-license)
-- [Compatibility with Anti-Cheat Software](#️-compatibility-with-anti-cheat-software-vac-eac-battleye-etc)
-- [Technical Notes](#️-technical-notes)
+- **拖拽锁定修复 (新!)**：在 UI 中开启。即使您的鼠标开关在拖动过程中发生抖动，也能保持稳定的拖动状态。拖动时的短暂停顿将被视为真正的释放，防止意外掉落。
+- **鼠标滚轮修复**：过滤掉异常的滚轮事件，防止意外反向滚动。
+- **自定义延迟**：通过用户友好的界面调整两次点击之间的最小毫秒数。默认值为 50ms。
+- **针对特定按键进行设置**：支持左键、右键、中键、X1 和 X2 键。默认仅对左键生效。
+- **Windows 系统托盘集成**：双击托盘图标即可打开设置界面，平时静默运行。
+- **开机启动选项**：支持注册为 Windows 开机启动项。
 
 ---
 
-## ✨ Features
-- **Drag & Drop Fix (New!)**: You can enable this in the UI. Hold, drag, and drop reliably — even if your mouse switch chatters during the gesture. A short pause while dragging is treated as the true release, preventing accidental drops.
-- **Mouse Wheel Fix**: Filters out spurious mouse wheel events to prevent accidental scrolling.
-- **Customizable Delay**: Adjust the minimal delay between two clicks via a user-friendly interface. Default is 50 ms.
-- **Customize for Specific Mouse Buttons**: Choose which mouse buttons to fix, including left, right, middle, X1, and X2. Default is left mouse button only.
-- **Windows Tray Integration**: Double-click the tray icon to open the settings UI.
-- **Startup Option**: Register the application to launch with Windows. The app tries to do this automatically when you launch it the first time.
+## 🔍 工作原理：过滤鼠标点击
 
-![logo](./main-screen.png)
----
+本项目通过底层钩子拦截鼠标事件，以区分正常的点击和由于鼠标硬件老化产生的“震荡（Chattering）”：
 
-## 🔍 How It Works: Filtering Mouse Clicks
-
-This application intercepts mouse events at a low level to distinguish between intentional clicks and unintentional "bouncing" or "chattering" from a faulty mouse switch. Here’s a step-by-step breakdown of the process:
-
-1.  **Low-Level Mouse Hook**: The application registers a `WH_MOUSE_LL` (low-level mouse) hook. This allows it to intercept mouse input events system-wide before they are passed to applications.
-2.  **Event Interception**: Every mouse event, such as `WM_LBUTTONDOWN` (left button down) or `WM_MOUSEMOVE` (mouse move), is captured by a callback function.
-3.  **Double-Click Filtering**:
-    *   When a mouse button **down** event occurs, the application measures the time elapsed since the last corresponding **up** event for that same button.
-    *   If this duration is shorter than the user-defined **threshold** (e.g., 50 ms), the event is considered an erroneous double-click and is "swallowed" or ignored. This prevents the system and other applications from ever receiving it.
-    *   If the duration is longer than the threshold, the click is considered intentional and is passed along to the system as usual.
-4.  **Drag & Drop Correction**: Faulty mice can also interfere with drag-and-drop operations by sending spurious "up" events while the button is being held down. The "Fix dragging issues" feature addresses this:
-    *   **Entering Drag-Lock**: When you press and hold a mouse button and then move the cursor beyond a small distance, the application enters a "drag-lock" mode for that button.
-    *   **Suppressing Jitter**: While in drag-lock, any subsequent `down` or `up` events for that button are ignored. This ensures that the drag is not accidentally interrupted.
-    *   **Releasing the Drag**: The drag is released only when you stop moving the mouse for a user-defined period (the "Drag release delay"). At that point, a genuine "up" event is sent, completing the drag-and-drop action.
-5.  **Mouse Wheel Filtering**:
-    *   Faulty mouse wheels can send spurious scroll events, often in the opposite direction of the intended scroll, causing a "jittery" or "bouncy" effect. The mouse wheel fix addresses this:
-    *   **Direction-Aware Filtering**: The application tracks the direction of the last scroll event (up/down or left/right).
-    *   **Time-Based Debouncing**: If a new scroll event occurs in the *opposite* direction of the previous one within a very short time (the user-defined threshold), it is considered "jitter" and is ignored.
-    *   **Preserving Fast Scrolling**: This direction-aware approach ensures that fast, intentional scrolling in the same direction is not affected, providing a smooth experience while only filtering out the erroneous "bounce-back" events.
-6.  **Forwarding Events**: Any event that is not filtered out is forwarded to the next hook in the chain using `CallNextHookEx`, ensuring normal mouse behavior for all other applications.
-
-This entire process is highly efficient and runs in the background with minimal performance impact, ensuring a smoother experience without interfering with your regular workflow or gaming.
+1.  **底层鼠标钩子 (Low-Level Mouse Hook)**：注册 `WH_MOUSE_LL` 钩子，在鼠标点击信号传递给系统和其他应用之前进行拦截。
+2.  **点击过滤**：当检测到按下事件时，计算与上一次弹起事件的时间差。如果小于用户设置的阈值（如 50ms），则视为无效点击并“吞掉（Swallow）”该信号。
+3.  **拖拽矫正**：针对拖拽过程中的抖动，进入“拖拽锁定”模式，过滤掉中间产生的意外弹起信号，直到由于静止而判定为真实释放。
+4.  **滚轮防抖**：通过方向感知技术过滤掉短时间内产生的反向滚动跳变。
 
 ---
 
-## 🖥️ System Requirements
-- **Operating System**: Windows 10 or later.
-- **.NET Runtime**: [.NET 8.0 Desktop Runtime](https://dotnet.microsoft.com/en-us/download/dotnet) or later (usually installed automatically).
+## 🖥️ 系统要求
+
+- **操作系统**：Windows 10 或更高版本。
+- **运行环境**：[.NET 8.0 Desktop Runtime](https://dotnet.microsoft.com/zh-cn/download/dotnet) 或更高版本（通常会自动安装）。
 
 ---
 
-## 🚀 Installation
+## 🚀 安装与使用
 
-The following options are supported for installing and running the application:
-
-### Install from Microsoft Store (recommended)
-1. Go to the [Store page](https://apps.microsoft.com/detail/9PDGM7NL2FF2?hl=en-us&gl=CH&ocid=pdpshare) and install it.
-
-### Manual Setup
-1. **Download**: Grab the latest release from the [Releases page](https://github.com/nenning/DoubleClickFix/releases).
-2. **Unzip & Run**: Extract the files and execute the `.exe`.
-    - Note: Settings are stored in the registry under `HKEY_CURRENT_USER\Software\DoubleClickFix`.
-    - Note: If you move the app to a different folder, you have to deregister & re-register the app to start with Windows.
-
-### Advanced Setup
-- **Build from Source**: Clone the repository and compile the application yourself using Visual Studio or your preferred .NET toolchain.
+1.  **下载**：从 [Releases 页面](https://github.com/nenning/DoubleClickFix/releases) 下载最新发布的压缩包。
+2.  **运行**：解压并执行 `.exe` 文件即可。
+    - 注意：设置存储在注册表：`HKEY_CURRENT_USER\Software\DoubleClickFix`。
 
 ---
 
-## ⚙️ Configuration
+## 🎮 反作弊软件兼容性 (VAC, EAC, BattlEye 等)
 
-### 🛠️ Settings
-- Settings can be adjusted in the UI, including:
-  - **Per-button delay**: Minimal delay (in ms) between clicks for each button.
-  - **Fix dragging issues**: Enables this only if you have problems with dragging (& dropping).
-  - **Drag start delay**: The time (in ms) a drag action must take to enter the drag lock state.
-  - **Drag release delay**: The time (in ms) you must hold the button after stopping movement before the release is registered. Alternatively, you can manually click to exit the drag lock.
-  - **Workaround for touch devices**: All double-clicks from touchpads or touchscreens are allowed by default. If you have trouble with this, enable the `Allow 0 ms Double-Click Duration` option in the UI.
+本项目使用 Windows 标准的物理输入层钩子 (`WH_MOUSE_LL`)。它**不**：
+- 注入任何代码到其他进程。
+- 读取或修改任何游戏的内存。
+- 自动化游戏操作（宏或连点器）。
 
-### 💡 Tips
-- Check the logs in the UI for detailed information on the elapsed time between your mouse clicks and filterd out double-clicks.
-- Experiment with different delay settings to optimize for your personal double-click speed and specific hardware issues.
-- Use the test area on the right side of the UI to test your settings (try also triple-clicking to select a whole paragraph and selecting text).
-
+虽然风险极低，但没有任何第三方工具能保证 100% 不受反作弊系统影响。本工具属于无害的辅助工具，用于解决硬件寿命带来的困扰。
 
 ---
 
-## 🤝 Contributions
-Contributions are welcome! Feel free to open issues, submit pull requests, or suggest improvements via the [Issues tab](https://github.com/nenning/DoubleClickFix/issues).
+## 🛠️ 技术说明
+
+本项目是基于作者 [nenning/DoubleClickFix](https://github.com/nenning/DoubleClickFix) 的汉化修改版。
+
+### 🌍 语言强制切换
+如果您想切换回英文或其他语言，可以在 `app.config` 文件中通过修改 **`languageOverride`** 键值来实现。
 
 ---
 
-## 📜 License
-This project is distributed under the [MIT License](LICENSE.txt).
-
----
-
-## 🎮 Compatibility with Anti-Cheat Software (VAC, EAC, BattlEye, etc.)
-
-### How DoubleClickFix Works
-This application uses a **low-level mouse hook** (`WH_MOUSE_LL`) to intercept and process mouse input events system-wide. Its sole purpose is to filter rapid, unintended clicks from faulty hardware and to stabilize drag-and-drop gestures. It does **not**:
-- Inject code into other processes.
-- Read or write the memory of any game.
-- Modify game files or assets.
-- Automate gameplay or provide any unfair advantage.
-
-### Why This Is Generally Safe
-Modern anti-cheat systems like Valve Anti-Cheat (VAC), Easy Anti-Cheat (EAC), and BattlEye are primarily designed to detect software that gives players an unfair competitive advantage. Their detection methods focus on:
-1.  **Known Cheat Signatures**: Scanning for hashes of known cheating programs.
-2.  **Process/Memory Manipulation**: Detecting unauthorized interaction with the game's process and memory space.
-3.  **Code Injection**: Identifying attempts to inject DLLs or other code into the game client.
-
-DoubleClickFix operates at the Windows input level, far removed from the game-specific vectors that anti-cheat systems monitor. Many legitimate accessibility tools and hardware drivers use similar low-level hooks without issue.
-
-**Disclaimer**: While the risk is extremely low, no third-party tool can be guaranteed to be 100% safe with all present and future anti-cheat systems. The use of any system-level tool alongside protected games is at your own discretion. However, given its function and architecture, DoubleClickFix is considered a low-risk utility for addressing a hardware-level problem.
-
-For official information, refer e.g. to Valve's [VAC documentation](https://help.steampowered.com/en/faqs/view/571A-97DA-70E9-FF74).
-
----
-
-## 🛠️ Technical Notes
-Some technical details - mostly for development.
-
-### 🖥️ Command-Line Arguments
-- **`-nohook`** – Runs the app without registering the mouse hook. Useful for UI testing or debugging (automatically applied in debug mode).
-- **`-interactive`** or **`-i`** – Displays the UI on startup. Useful for testing (automatically applied in debug mode).
-
-### 🌍 Language Override
-- The application language can be overridden by setting the **`languageOverride`** key in the `app.config` file (for testing purposes).
-
-### 📦 Creating a Release
-
-#### Github
-- To create a github release (zip), run the following commands:
-    - `git tag -a v1.0.1.0`
-    - `git push origin v1.0.1.0`
-- This will trigger the GitHub Action that creates the release.
-- Add the release notes on GitHub.
-
-#### Microsoft Store
-- If needed, adjust the version in `Package.appxmanifest`.
-- To create a store package, use **Publish** → **Create App Packages** in Visual Studio.
-- Publish it through the [Partner Portal](https://partner.microsoft.com/en-us/dashboard/apps-and-games/overview): upload the package (`.msixbundle`), fill in the details and submit it for certification.
+## 📜 开源协议
+本项目根据 [MIT 协议](LICENSE.txt) 分发。
