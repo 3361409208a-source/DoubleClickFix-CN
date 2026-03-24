@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="delayLabel.Text" xml:space="preserve">
+    <value>最小双击速度 [ms]</value>
+  </data>
+  <data name="delayLabel.ToolTip" xml:space="preserve">
+    <value>调整所选鼠标按键的最小双击速度。默认值：50。</value>
+  </data>
+  <data name="delayTextBox.ToolTip" xml:space="preserve">
+    <value>小于设定时间间隔的双击将被忽略。</value>
+  </data>
+  <data name="saveButton.Text" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="saveButton.ToolTip" xml:space="preserve">
+    <value>保存设置</value>
+  </data>
+  <data name="runAtStartupCheckBox.Text" xml:space="preserve">
+    <value>随 Windows 启动</value>
+  </data>
+  <data name="runAtStartupCheckBox.ToolTip" xml:space="preserve">
+    <value>始终在后台运行此应用程序</value>
+  </data>
+  <data name="dragEndDelayLabel.Text" xml:space="preserve">
+    <value>结束延迟 [ms]</value>
+  </data>
+  <data name="dragEndDelayLabel.ToolTip" xml:space="preserve">
+    <value>在释放按键以退出拖拽锁定状态之前，鼠标必须保持静止的最短时间。默认值：150。</value>
+  </data>
+  <data name="dragStartDelayLabel.Text" xml:space="preserve">
+    <value>开始延迟 [ms]</value>
+  </data>
+  <data name="dragStartDelayLabel.ToolTip" xml:space="preserve">
+    <value>在进入拖拽锁定状态之前必须拖拽的最短时间。默认值：1000。</value>
+  </data>
+  <data name="fixDraggingCheckBox.Text" xml:space="preserve">
+    <value>修复拖拽问题</value>
+  </data>
+  <data name="fixDraggingCheckBox.ToolTip" xml:space="preserve">
+    <value>仅在拖拽出现问题时使用。你可能需要再次点击以退出拖拽锁定状态。</value>
+  </data>
+  <data name="useMinDelayCheckBox.Text" xml:space="preserve">
+    <value>允许 0ms 持续时间的双击</value>
+  </data>
+  <data name="useMinDelayCheckBox.ToolTip" xml:space="preserve">
+    <value>仅在触摸板或触摸屏无法正常工作时使用</value>
+  </data>
+  <data name="buttonEnabledCheckBox.Text" xml:space="preserve">
+    <value>修正开启</value>
+  </data>
+  <data name="buttonEnabledCheckBox.ToolTip" xml:space="preserve">
+    <value>分别为每个鼠标按键启用双击修正</value>
+  </data>
+  <data name="mouseButtonComboBox.Items" xml:space="preserve">
+    <value>鼠标左键</value>
+  </data>
+  <data name="mouseButtonComboBox.Items1" xml:space="preserve">
+    <value>鼠标右键</value>
+  </data>
+  <data name="mouseButtonComboBox.Items2" xml:space="preserve">
+    <value>鼠标中键</value>
+  </data>
+  <data name="mouseButtonComboBox.Items3" xml:space="preserve">
+    <value>X1 键</value>
+  </data>
+  <data name="mouseButtonComboBox.Items4" xml:space="preserve">
+    <value>X2 键</value>
+  </data>
+  <data name="mouseButtonComboBox.Items5" xml:space="preserve">
+    <value>鼠标滚轮</value>
+  </data>
+  <data name="groupBox1.Text" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="x2.Text" xml:space="preserve">
+    <value>X2</value>
+  </data>
+  <data name="x1.Text" xml:space="preserve">
+    <value>X1</value>
+  </data>
+  <data name="middle.Text" xml:space="preserve">
+    <value>中键</value>
+  </data>
+  <data name="right.Text" xml:space="preserve">
+    <value>右键</value>
+  </data>
+  <data name="left.Text" xml:space="preserve">
+    <value>左键</value>
+  </data>
+  <data name="showUiMenu.Text" xml:space="preserve">
+    <value>显示用户界面</value>
+  </data>
+  <data name="exitMenu.Text" xml:space="preserve">
+    <value>退出程序</value>
+  </data>
+  <data name="notifyIcon.Text" xml:space="preserve">
+    <value>双击修正</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>修复鼠标损坏导致的意外双击问题。</value>
+  </data>
+  <data name="descriptionTextBox.Text" xml:space="preserve">
+    <value>在日志中，你可以看到点击之间流逝的时间以及被忽略的双击。
+观察你的双击持续时间，并与鼠标生成的错误双击进行比较。
+调整最小速度以捕获错误点击，同时保持在你的正常速度以下。
+使用测试文本测试鼠标在当前设置下的行为（单击、双击、文本选择）。</value>
+  </data>
+  <data name="richTextBox1.Text" xml:space="preserve">
+    <value>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+</value>
+  </data>
+  <data name="groupBox2.Text" xml:space="preserve">
+    <value>描述</value>
+  </data>
+  <data name="groupBox3.Text" xml:space="preserve">
+    <value>日志</value>
+  </data>
+  <data name="groupBox4.Text" xml:space="preserve">
+    <value>测试</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>双击修正</value>
+  </data>
+</root>

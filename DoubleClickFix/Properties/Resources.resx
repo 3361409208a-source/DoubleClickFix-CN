@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -171,5 +171,14 @@
   </data>
   <data name="MouseWheelDelta" xml:space="preserve">
     <value>Mouse wheel delta</value>
+  </data>
+  <data name="FailedToRegisterRawInput" xml:space="preserve">
+    <value>Failed to register raw input device.</value>
+  </data>
+  <data name="FailedToUninstallHook" xml:space="preserve">
+    <value>Failed to uninstall hook.</value>
+  </data>
+  <data name="FailedToOpenLink" xml:space="preserve">
+    <value>Failed to open link</value>
   </data>
 </root>

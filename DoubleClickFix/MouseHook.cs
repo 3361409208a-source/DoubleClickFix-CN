@@ -1,4 +1,4 @@
-﻿using DoubleClickFix.Properties;
+using DoubleClickFix.Properties;
 using Microsoft.Win32;
 using System.Collections.Frozen;
 using System.ComponentModel;
@@ -150,7 +150,7 @@ internal class MouseHook : IDisposable
             }
             catch (Win32Exception ex)
             {
-                logger.Log($"Failed to uninstall hook: {ex.Message}");
+                logger.Log($"{Resources.FailedToUninstallHook}: {ex.Message}");
             }
             finally
             {
@@ -170,7 +170,7 @@ internal class MouseHook : IDisposable
         }
         catch (Win32Exception ex)
         {
-            logger.Log($"Failed to register raw input device. {ex.Message}");  // TODO translate.
+            logger.Log($"{Resources.FailedToRegisterRawInput} {ex.Message}");
         }
     }
 

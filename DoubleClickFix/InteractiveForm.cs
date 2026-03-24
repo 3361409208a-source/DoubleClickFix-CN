@@ -1,4 +1,4 @@
-﻿using DoubleClickFix.Properties;
+using DoubleClickFix.Properties;
 using System.Diagnostics;
 using System.Globalization;
 namespace DoubleClickFix;
@@ -405,7 +405,7 @@ internal partial class InteractiveForm : Form
         }
         catch
         {
-            Log(@"Failed to open https://github.com/nenning/DoubleClickFix");
+            Log($"{Resources.FailedToOpenLink} https://github.com/nenning/DoubleClickFix");
         }
     }
 
