@@ -1,6 +1,6 @@
 # 🖱️ DoubleClickFix - 中文版 (双击修正)
 
-[![.NET](https://github.com/nenning/DoubleClickFix/actions/workflows/dotnet.yml/badge.svg)](https://github.com/nenning/DoubleClickFix/actions/workflows/dotnet.yml) &nbsp; [![GitHub release (latest by date)](https://img.shields.io/github/v/release/nenning/DoubleClickFix)](https://github.com/nenning/DoubleClickFix/releases/latest) &nbsp; [![License](https://img.shields.io/github/license/nenning/DoubleClickFix)](LICENSE.txt)
+[![.NET](https://github.com/3361409208a-source/DoubleClickFix-CN/actions/workflows/dotnet.yml/badge.svg)](https://github.com/3361409208a-source/DoubleClickFix-CN/actions/workflows/dotnet.yml) &nbsp; [![GitHub release (latest by date)](https://img.shields.io/github/v/release/3361409208a-source/DoubleClickFix-CN)](https://github.com/3361409208a-source/DoubleClickFix-CN/releases/latest) &nbsp; [![License](https://img.shields.io/github/license/3361409208a-source/DoubleClickFix-CN)](LICENSE.txt)
 
 这是一个轻量级的 Windows 工具，专门用于修复由于鼠标开关硬件故障（如：微动开关连击、抖动）引起的意外双击问题。
 
@@ -41,7 +41,7 @@
 
 ## 🚀 安装与使用
 
-1.  **下载**：从 [Releases 页面](https://github.com/nenning/DoubleClickFix/releases) 下载最新发布的压缩包。
+1.  **下载**：从 [Releases 页面](https://github.com/3361409208a-source/DoubleClickFix-CN/releases) 下载最新发布的程序。
 2.  **运行**：解压并执行 `.exe` 文件即可。
     - 注意：设置存储在注册表：`HKEY_CURRENT_USER\Software\DoubleClickFix`。
 
@@ -61,6 +61,7 @@
 ## 🛠️ 技术说明
 
 本项目是基于作者 [nenning/DoubleClickFix](https://github.com/nenning/DoubleClickFix) 的汉化修改版。
+项目目前的维护地址为 [3361409208a-source/DoubleClickFix-CN](https://github.com/3361409208a-source/DoubleClickFix-CN)。
 
 ### 🌍 语言强制切换
 如果您想切换回英文或其他语言，可以在 `app.config` 文件中通过修改 **`languageOverride`** 键值来实现。
