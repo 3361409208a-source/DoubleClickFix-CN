@@ -31,7 +31,7 @@ jobs:
     - name: Publish (Single EXE - Portable Edition)
       run: |
         dotnet clean DoubleClickFix/DoubleClickFix.csproj -c Release
-        dotnet publish DoubleClickFix/DoubleClickFix.csproj -c Release -r win-x64 -p:SelfContained=false -p:PublishSingleFile=true -p:EnableCompressionInSingleFile=true -o SingleFilePortableOutput
+        dotnet publish DoubleClickFix/DoubleClickFix.csproj -c Release -r win-x64 -p:SelfContained=false -p:PublishSingleFile=true -o SingleFilePortableOutput
       shell: pwsh
 
     - name: Publish (Single EXE - Standalone Edition)
@@ -52,11 +52,9 @@ jobs:
           DoubleClickFix 中文汉化精简版 (v1.5.3-CN)。
           
           **下载选项（请按需选择）：**
-          1. **`DoubleClickFix-Standalone.exe`** (独立单文件)：**零依赖！** 内置运行环境，下载即用。通过 ReadyToRun 优化启动速度。
-          2. **`DoubleClickFix-Portable.exe`** (轻便单文件)：便捷版。单文件，但依赖电脑已安装的 .NET 10 环境。
-          3. **`DoubleClickFix-Small.zip`** (多文件压缩包)：极致小巧。与原作者目录结构一致，依赖 .NET 10。
-          
-          程序运行后会静默在系统托盘，双击托盘图标进入设置界面。
+          1. **`DoubleClickFix-Standalone.exe`** (独立单文件)：**零依赖！** 内置运行环境，且开启了强力压缩。建议电脑没装 .NET 的用户下载。
+          2. **`DoubleClickFix-Portable.exe`** (轻便单文件)：便捷版。单文件，需要电脑装有 .NET 10 环境。体积非常精简。
+          3. **`DoubleClickFix-Small.zip`** (多文件压缩包)：极致小巧（约6MB）。适合追求极致体积的用户。
         draft: false
         prerelease: false
 
