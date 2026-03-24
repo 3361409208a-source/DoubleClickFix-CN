@@ -26,8 +26,12 @@ jobs:
       run: dotnet publish DoubleClickFix/DoubleClickFix.csproj -c Release --self-contained false -o MultiFileOutput
       shell: pwsh
 
-    - name: Publish (Single EXE)
-      run: dotnet publish DoubleClickFix/DoubleClickFix.csproj -c Release -r win-x64 --self-contained false -p:PublishSingleFile=true -p:EnableCompressionInSingleFile=true -o SingleFileOutput
+    - name: Publish (Single EXE - Portable)
+      run: dotnet publish DoubleClickFix/DoubleClickFix.csproj -c Release -r win-x64 --self-contained false -p:PublishSingleFile=true -p:EnableCompressionInSingleFile=true -o SingleFilePortableOutput
+      shell: pwsh
+
+    - name: Publish (Single EXE - Standalone)
+      run: dotnet publish DoubleClickFix/DoubleClickFix.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:EnableCompressionInSingleFile=true -o SingleFileStandaloneOutput
       shell: pwsh
 
     - name: Create ZIP file (Small Multi-file)
@@ -45,23 +49,34 @@ jobs:
         body: |
           DoubleClickFix 中文汉化版发布。
           
-          **下载选项：**
-          1. **`DoubleClickFix.exe`** (单文件，55MB)：推荐！下载后可直接运行，无需解压。适合追求便捷的用户。
-          2. **`DoubleClickFix-Small.zip`** (多文件压缩包，约6MB)：极致轻量！解压后运行文件夹内的 `DoubleClickFix.exe`。适合追求最小体积的用户。
+          **下载选项（任选其一）：**
+          1. **`DoubleClickFix-Standalone.exe`** (单文件，约135MB+)：**最推荐！零依赖版。** 即使电脑没装 .NET 环境也能运行。适合最广泛的用户。
+          2. **`DoubleClickFix-Portable.exe`** (单文件，约55MB)：便捷版。单文件，但需要电脑已安装 .NET 10 运行环境。
+          3. **`DoubleClickFix-Small.zip`** (多文件压缩包，约6MB)：极致轻量。需要解压，且需要电脑已安装 .NET 10 运行环境。
           
           程序将显示在 Windows 系统托盘。双击该图标可打开 UI 并调整设置。
-          仅支持 Windows 系统。需要 .NET 10 运行环境。
+          仅支持 Windows 系统。
         draft: false
         prerelease: false
 
-    - name: Upload Single EXE asset
+    - name: Upload Standalone EXE asset
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./SingleFileOutput/DoubleClickFix.exe
-        asset_name: DoubleClickFix.exe
+        asset_path: ./SingleFileStandaloneOutput/DoubleClickFix.exe
+        asset_name: DoubleClickFix-Standalone.exe
+        asset_content_type: application/octet-stream
+
+    - name: Upload Portable EXE asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./SingleFilePortableOutput/DoubleClickFix.exe
+        asset_name: DoubleClickFix-Portable.exe
         asset_content_type: application/octet-stream
 
     - name: Upload Small ZIP asset
