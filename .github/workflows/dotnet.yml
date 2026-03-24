@@ -23,15 +23,19 @@ jobs:
       run: dotnet restore
 
     - name: Publish (Small Multi-file)
-      run: dotnet publish DoubleClickFix/DoubleClickFix.csproj -c Release --self-contained false -o MultiFileOutput
+      run: dotnet publish DoubleClickFix/DoubleClickFix.csproj -c Release --self-contained false -p:PublishSingleFile=false -o MultiFileOutput
       shell: pwsh
 
     - name: Publish (Single EXE - Portable)
-      run: dotnet publish DoubleClickFix/DoubleClickFix.csproj -c Release -r win-x64 --self-contained false -p:PublishSingleFile=true -p:EnableCompressionInSingleFile=true -o SingleFilePortableOutput
+      run: |
+        dotnet clean DoubleClickFix/DoubleClickFix.csproj -c Release
+        dotnet publish DoubleClickFix/DoubleClickFix.csproj -c Release -r win-x64 --self-contained false -p:PublishSingleFile=true -p:EnableCompressionInSingleFile=true -o SingleFilePortableOutput
       shell: pwsh
 
     - name: Publish (Single EXE - Standalone)
-      run: dotnet publish DoubleClickFix/DoubleClickFix.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:EnableCompressionInSingleFile=true -o SingleFileStandaloneOutput
+      run: |
+        dotnet clean DoubleClickFix/DoubleClickFix.csproj -c Release
+        dotnet publish DoubleClickFix/DoubleClickFix.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:EnableCompressionInSingleFile=true -o SingleFileStandaloneOutput
       shell: pwsh
 
     - name: Create ZIP file (Small Multi-file)
@@ -49,10 +53,10 @@ jobs:
         body: |
           DoubleClickFix 中文汉化版发布。
           
-          **下载选项（任选其一）：**
-          1. **`DoubleClickFix-Standalone.exe`** (单文件，约135MB+)：**最推荐！零依赖版。** 即使电脑没装 .NET 环境也能运行。适合最广泛的用户。
-          2. **`DoubleClickFix-Portable.exe`** (单文件，约55MB)：便捷版。单文件，但需要电脑已安装 .NET 10 运行环境。
-          3. **`DoubleClickFix-Small.zip`** (多文件压缩包，约6MB)：极致轻量。需要解压，且需要电脑已安装 .NET 10 运行环境。
+          **下载选项（各取所需）：**
+          1. **`DoubleClickFix-Standalone.exe`** (单文件，零依赖区)：包含全部运行环境。下载即运行，不挑系统，不需要装 .NET。
+          2. **`DoubleClickFix-Portable.exe`** (单文件，轻便区)：极致单文件，需要电脑已安装 .NET 10 核心环境。
+          3. **`DoubleClickFix-Small.zip`** (多文件压缩包，约6MB)：原本的味道。多文件，依赖 .NET 10 环境。
           
           程序将显示在 Windows 系统托盘。双击该图标可打开 UI 并调整设置。
           仅支持 Windows 系统。
