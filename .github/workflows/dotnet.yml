@@ -22,24 +22,22 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
 
-    - name: Publish (Small Multi-file)
-      run: dotnet publish DoubleClickFix/DoubleClickFix.csproj -c Release --self-contained false -p:PublishSingleFile=false -o MultiFileOutput
+    - name: Publish (Small Multi-file ZIP - No dependency)
+      run: |
+        dotnet publish DoubleClickFix/DoubleClickFix.csproj -c Release --self-contained false -p:PublishSingleFile=false -o MultiFileOutput
+        Compress-Archive -Path MultiFileOutput/* -DestinationPath DoubleClickFix-Small.zip
       shell: pwsh
 
-    - name: Publish (Single EXE - Portable)
+    - name: Publish (Single EXE - Portable Edition)
       run: |
         dotnet clean DoubleClickFix/DoubleClickFix.csproj -c Release
-        dotnet publish DoubleClickFix/DoubleClickFix.csproj -c Release -r win-x64 --self-contained false -p:PublishSingleFile=true -p:EnableCompressionInSingleFile=true -o SingleFilePortableOutput
+        dotnet publish DoubleClickFix/DoubleClickFix.csproj -c Release -r win-x64 -p:SelfContained=false -p:PublishSingleFile=true -p:EnableCompressionInSingleFile=true -o SingleFilePortableOutput
       shell: pwsh
 
-    - name: Publish (Single EXE - Standalone)
+    - name: Publish (Single EXE - Standalone Edition)
       run: |
         dotnet clean DoubleClickFix/DoubleClickFix.csproj -c Release
-        dotnet publish DoubleClickFix/DoubleClickFix.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:EnableCompressionInSingleFile=true -o SingleFileStandaloneOutput
-      shell: pwsh
-
-    - name: Create ZIP file (Small Multi-file)
-      run: Compress-Archive -Path MultiFileOutput/* -DestinationPath DoubleClickFix-Small.zip
+        dotnet publish DoubleClickFix/DoubleClickFix.csproj -c Release -r win-x64 -p:SelfContained=true -p:PublishSingleFile=true -p:EnableCompressionInSingleFile=true -p:PublishTrimmed=true -p:TrimMode=link -o SingleFileStandaloneOutput
       shell: pwsh
 
     - name: Create Release
@@ -51,19 +49,18 @@ jobs:
         tag_name: ${{ github.ref }}
         release_name: Release ${{ github.ref }}
         body: |
-          DoubleClickFix 中文汉化版发布。
+          DoubleClickFix 中文汉化版发布 (v1.5.6-CN)。
           
-          **下载选项（各取所需）：**
-          1. **`DoubleClickFix-Standalone.exe`** (单文件，零依赖区)：包含全部运行环境。下载即运行，不挑系统，不需要装 .NET。
-          2. **`DoubleClickFix-Portable.exe`** (单文件，轻便区)：极致单文件，需要电脑已安装 .NET 10 核心环境。
-          3. **`DoubleClickFix-Small.zip`** (多文件压缩包，约6MB)：原本的味道。多文件，依赖 .NET 10 环境。
+          **下载说明 (任选其一)：**
+          1. **`DoubleClickFix-Standalone.exe`** (独立单文件)：**零依赖！** 即使没装 .NET 10 环境也能运行。已开启代码剪裁优化及压缩。
+          2. **`DoubleClickFix-Portable.exe`** (轻便单文件)：便捷版。需电脑已安装 .NET 10 桌面运行时。体积较小。
+          3. **`DoubleClickFix-Small.zip`** (多文件原生包)：极致小巧。解压运行，需 .NET 10 环境。
           
           程序将显示在 Windows 系统托盘。双击该图标可打开 UI 并调整设置。
-          仅支持 Windows 系统。
         draft: false
         prerelease: false
 
-    - name: Upload Standalone EXE asset
+    - name: Upload Standalone EXE
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -73,7 +70,7 @@ jobs:
         asset_name: DoubleClickFix-Standalone.exe
         asset_content_type: application/octet-stream
 
-    - name: Upload Portable EXE asset
+    - name: Upload Portable EXE
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -83,7 +80,7 @@ jobs:
         asset_name: DoubleClickFix-Portable.exe
         asset_content_type: application/octet-stream
 
-    - name: Upload Small ZIP asset
+    - name: Upload Small ZIP
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
