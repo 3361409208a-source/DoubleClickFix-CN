@@ -22,7 +22,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
 
-    - name: Publish (Small Multi-file ZIP - No dependency)
+    - name: Publish (Small Multi-file ZIP)
       run: |
         dotnet publish DoubleClickFix/DoubleClickFix.csproj -c Release --self-contained false -p:PublishSingleFile=false -o MultiFileOutput
         Compress-Archive -Path MultiFileOutput/* -DestinationPath DoubleClickFix-Small.zip
@@ -37,7 +37,7 @@ jobs:
     - name: Publish (Single EXE - Standalone Edition)
       run: |
         dotnet clean DoubleClickFix/DoubleClickFix.csproj -c Release
-        dotnet publish DoubleClickFix/DoubleClickFix.csproj -c Release -r win-x64 -p:SelfContained=true -p:PublishSingleFile=true -p:EnableCompressionInSingleFile=true -p:PublishTrimmed=true -p:TrimMode=link -o SingleFileStandaloneOutput
+        dotnet publish DoubleClickFix/DoubleClickFix.csproj -c Release -r win-x64 -p:SelfContained=true -p:PublishSingleFile=true -p:EnableCompressionInSingleFile=true -p:PublishReadyToRun=true -o SingleFileStandaloneOutput
       shell: pwsh
 
     - name: Create Release
@@ -49,14 +49,14 @@ jobs:
         tag_name: ${{ github.ref }}
         release_name: Release ${{ github.ref }}
         body: |
-          DoubleClickFix 中文汉化版发布 (v1.5.6-CN)。
+          DoubleClickFix 中文汉化精简版 (v1.5.3-CN)。
           
-          **下载说明 (任选其一)：**
-          1. **`DoubleClickFix-Standalone.exe`** (独立单文件)：**零依赖！** 即使没装 .NET 10 环境也能运行。已开启代码剪裁优化及压缩。
-          2. **`DoubleClickFix-Portable.exe`** (轻便单文件)：便捷版。需电脑已安装 .NET 10 桌面运行时。体积较小。
-          3. **`DoubleClickFix-Small.zip`** (多文件原生包)：极致小巧。解压运行，需 .NET 10 环境。
+          **下载选项（请按需选择）：**
+          1. **`DoubleClickFix-Standalone.exe`** (独立单文件)：**零依赖！** 内置运行环境，下载即用。通过 ReadyToRun 优化启动速度。
+          2. **`DoubleClickFix-Portable.exe`** (轻便单文件)：便捷版。单文件，但依赖电脑已安装的 .NET 10 环境。
+          3. **`DoubleClickFix-Small.zip`** (多文件压缩包)：极致小巧。与原作者目录结构一致，依赖 .NET 10。
           
-          程序将显示在 Windows 系统托盘。双击该图标可打开 UI 并调整设置。
+          程序运行后会静默在系统托盘，双击托盘图标进入设置界面。
         draft: false
         prerelease: false
 
