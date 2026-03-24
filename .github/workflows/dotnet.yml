@@ -22,7 +22,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Publish
-      run: dotnet publish DoubleClickFix/DoubleClickFix.csproj -c Release -r win-x64 --self-contained false -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -o PublishOutput
+      run: dotnet publish DoubleClickFix/DoubleClickFix.csproj -c Release -r win-x64 --self-contained false -p:PublishSingleFile=true -p:EnableCompressionInSingleFile=true -o PublishOutput
       shell: pwsh
 
     - name: Create ZIP file
